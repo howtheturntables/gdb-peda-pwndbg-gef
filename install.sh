@@ -2,6 +2,8 @@
 
 installer_path=$PWD
 
+mkdir -p ~/.gdb_plugins
+
 echo "[+] Checking for required dependencies..."
 if command -v git >/dev/null 2>&1 ; then
     echo "[-] Git found!"
@@ -16,62 +18,62 @@ if [ -f ~/.gdbinit ] || [ -h ~/.gdbinit ]; then
 fi
 
 # download peda and decide whether to overwrite if exists
-if [ -d ~/peda ] || [ -h ~/.peda ]; then
+if [ -d ~/.gdb_plugins/peda ] || [ -h ~/.peda ]; then
     echo "[-] PEDA found"
     read -p "skip download to continue? (enter 'y' or 'n') " skip_peda
 
     if [ $skip_peda = 'n' ]; then
-        rm -rf ~/peda
-        git clone https://github.com/longld/peda.git ~/peda
+        rm -rf ~/.gdb_plugins/peda
+        git clone https://github.com/longld/peda.git ~/.gdb_plugins/peda
     else
         echo "PEDA skipped"
     fi
 else
     echo "[+] Downloading PEDA..."
-    git clone https://github.com/longld/peda.git ~/peda
+    git clone https://github.com/longld/peda.git ~/.gdb_plugins/peda
 fi
 
 # download peda arm
-if [ -d ~/peda-arm ] || [ -h ~/.peda ]; then
+if [ -d ~/.gdb_plugins/peda-arm ] || [ -h ~/.peda ]; then
     echo "[-] PEDA ARM found"
     read -p "skip download to continue? (enter 'y' or 'n') " skip_peda
 
     if [ $skip_peda = 'n' ]; then
-        rm -rf ~/peda-arm
+        rm -rf ~/.gdb_plugins/peda-arm
 	git clone https://github.com/alset0326/peda-arm.git
     else
 	echo "PEDA ARM skipped"
     fi
 else	    
     echo "[+] Downloading PEDA ARM..."
-    git clone https://github.com/alset0326/peda-arm.git ~/peda-arm
+    git clone https://github.com/alset0326/peda-arm.git ~/.gdb_plugins/peda-arm
 fi
 
 # download pwndbg
-if [ -d ~/pwndbg ] || [ -h ~/.pwndbg ]; then
+if [ -d ~/.gdb_plugins/pwndbg ] || [ -h ~/.pwndbg ]; then
     echo "[-] Pwndbg found"
     read -p "skip download to continue? (enter 'y' or 'n') " skip_pwndbg
 
     if [ $skip_pwndbg = 'n' ]; then
-        rm -rf ~/pwndbg
-        git clone https://github.com/pwndbg/pwndbg.git ~/pwndbg
+        rm -rf ~/.gdb_plugins/pwndbg
+        git clone https://github.com/pwndbg/pwndbg.git ~/.gdb_plugins/pwndbg
 
-        cd ~/pwndbg
+        cd ~/.gdb_plugins/pwndbg
         ./setup.sh
     else
         echo "Pwndbg skipped"
     fi
 else
     echo "[+] Downloading Pwndbg..."
-    git clone https://github.com/pwndbg/pwndbg.git ~/pwndbg
+    git clone https://github.com/pwndbg/pwndbg.git ~/.gdb_plugins/pwndbg
 
-    cd ~/pwndbg
+    cd ~/.gdb_plugins/pwndbg
     ./setup.sh
 fi
 
 # download gef
 echo "[+] Downloading GEF..."
-git clone https://github.com/hugsy/gef.git ~/gef
+git clone https://github.com/hugsy/gef.git ~/.gdb_plugins/gef
 
 cd $installer_path
 
