@@ -1,8 +1,9 @@
 # ensures GDB resolves paths relative to the root of the file system
 set sysroot /
 
-# automatically executes hookpost-file after a file command is issued to load an executable
+# the hookpost-file function automatically executes after a file command is issued to load an executable
 define hookpost-file
+# ensures GDB resolves paths relative to the root of the file system every time a new executable is loaded
 set sysroot /
 end
 
@@ -27,10 +28,14 @@ document init-peda-intel
 Initializes the PEDA (Python Exploit Development Assistant for GDB) framework for INTEL.
 end
 
+# creates a custom command called `init-pwndbg`` that can be called from gdb
 define init-pwndbg
+# loads pwndbg (a powerful GDB plugin for exploit development)
 source ~/.gdb_plugins/pwndbg/gdbinit.py
+# configures GDB to follow the parent process after a fork
 set follow-fork-mode parent
 end
+# provides documentation for the custom `init-pwndbg` command
 document init-pwndbg
 Initializes PwnDBG
 end
